@@ -1,0 +1,29 @@
+{
+    "name": "@wolfden/ui",
+    "version": "0.0.1",
+    "description": "This is wolfden ui",
+    "main": "dist/index.js",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
+    },
+    "author": "Nazareno Ciancaglini <nazareno.ciancaglini@gmail.com>",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^5.5.2"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "dependencies": {
+        "@types/node": "^20.14.9",
+        "@types/react": "^18.3.3"
+    }
+}
