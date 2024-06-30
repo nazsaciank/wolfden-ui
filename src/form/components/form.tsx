@@ -3,7 +3,7 @@ import React, { FormEvent } from "react"
 import { FormGroup } from "../types"
 import { FormContext } from "../context"
 
-type FormProps<T extends object = any> = React.ComponentProps<"form"> & {
+type FormProps<T extends object = any> = Omit<React.ComponentProps<"form">, "onSubmit"> & {
     group: FormGroup<T>
 
     onSubmit?: (values: T) => void
