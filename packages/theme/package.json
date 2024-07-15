@@ -1,6 +1,6 @@
 {
 	"name": "@wolfden-ui/theme",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "This is the theme package for Wolfden UI",
 	"main": "dist/index.js",
 	"files": [
@@ -17,6 +17,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"publish": "npm run build && npm publish",
 		"prettier": "prettier --write \"**/*.{ts,tsx}\""
 	},
 	"author": "Nazareno Ciancaglini <nazareno.ciancaglini@gmail.com>",
