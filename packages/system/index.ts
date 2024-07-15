@@ -7,5 +7,6 @@ export { formatByte } from "./utils/format-bytes"
 export { formatThosand } from "./utils/format-thousand"
 
 export { useLoading } from "./hooks/use-loading"
+export { useDebounce, useDebounceMap } from "./hooks/use-debounce"
 
 export * from "./interfaces"
