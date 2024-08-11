@@ -33,3 +33,19 @@ export function getSeparetorDecimal(locale: string | string[] = "en-US") {
 	if (!decimal) return ""
 	return decimal.value
 }
+
+export function parseNumber(value: string, locale: string = "en-US") {
+	if (value == null || value == undefined) return ""
+	if (typeof value === "number") return value
+	const group = getSeparatorGroup(locale)
+	const decimal = getSeparetorDecimal(locale)
+
+	if (typeof value === "string") {
+		value = value.replaceAll(group, "")
+		if (decimal !== ".") value = value.replace(decimal, ".")
+	}
+
+	if (!isNaN(Number(value))) return Number(value)
+
+	return value
+}
