@@ -27,7 +27,7 @@ export function getSeparatorGroup(locale: string | string[] = "en-US") {
 	return group.value
 }
 
-export function getSeparetorDecimal(locale: string | string[] = "en-US") {
+export function getSeparatorDecimal(locale: string | string[] = "en-US") {
 	const number = new Intl.NumberFormat(locale).formatToParts(1.1)
 	const decimal = number.find((f) => f.type == "decimal")
 	if (!decimal) return ""
@@ -38,7 +38,7 @@ export function parseNumber(value: string, locale: string = "en-US") {
 	if (value == null || value == undefined) return ""
 	if (typeof value === "number") return value
 	const group = getSeparatorGroup(locale)
-	const decimal = getSeparetorDecimal(locale)
+	const decimal = getSeparatorDecimal(locale)
 
 	if (typeof value === "string") {
 		value = value.replaceAll(group, "")
