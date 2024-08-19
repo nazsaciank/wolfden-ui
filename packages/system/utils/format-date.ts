@@ -6,6 +6,70 @@ type FormatDateOptions<T extends string = any> = {
 	[key in T]: Intl.DateTimeFormatOptions
 }
 
+type PatternDate = Record<
+	string,
+	{
+		value: string
+		config: Intl.DateTimeFormatOptions
+	}[]
+>
+
+export const PATTERN_DATE: PatternDate = {
+	era: [
+		{ value: "GGG", config: { era: "long" } },
+		{ value: "GG", config: { era: "narrow" } },
+		{ value: "G", config: { era: "short" } },
+	],
+	years: [
+		{ value: "yyyy", config: { year: "numeric" } },
+		{ value: "yy", config: { year: "2-digit" } },
+	],
+	month: [
+		{ value: "MMMMM", config: { month: "long" } },
+		{ value: "MMMM", config: { month: "short" } },
+		{ value: "MMM", config: { month: "narrow" } },
+		{ value: "MM", config: { month: "2-digit" } },
+		{ value: "M", config: { month: "numeric" } },
+		// L
+	],
+	weekday: [
+		{ value: "eee", config: { weekday: "long" } },
+		{ value: "ee", config: { weekday: "short" } },
+		{ value: "e", config: { weekday: "narrow" } },
+	],
+	day: [
+		{ value: "dd", config: { day: "2-digit" } },
+		{ value: "d", config: { day: "numeric" } },
+	],
+	dayPariod: [
+		{ value: "bbb", config: { dayPeriod: "long" } },
+		{ value: "bb", config: { dayPeriod: "narrow" } },
+		{ value: "b", config: { dayPeriod: "short" } },
+	],
+	hour: [
+		{ value: "HH", config: { hour: "2-digit", hour12: false } },
+		{ value: "H", config: { hour: "numeric", hour12: false } },
+		{ value: "hh", config: { hour: "2-digit", hour12: true } },
+		{ value: "h", config: { hour: "numeric", hour12: true } },
+	],
+	minute: [
+		{ value: "mm", config: { minute: "2-digit" } },
+		{ value: "m", config: { minute: "numeric" } },
+	],
+	second: [
+		{ value: "ss", config: { second: "2-digit" } },
+		{ value: "s", config: { second: "numeric" } },
+	],
+	zone: [
+		{ value: "zzz", config: { timeZoneName: "shortGeneric" } },
+		{ value: "zz", config: { timeZoneName: "shortOffset" } },
+		{ value: "z", config: { timeZoneName: "short" } },
+		{ value: "ZZZ", config: { timeZoneName: "longGeneric" } },
+		{ value: "ZZ", config: { timeZoneName: "longOffset" } },
+		{ value: "Z", config: { timeZoneName: "long" } },
+	],
+}
+
 const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 	short: {
 		day: "numeric",
@@ -96,15 +160,12 @@ const FORMAT: FormatDateOptions<FormatDateTime | FormatDate | FormatTime> = {
 	...FORMAT_TIME,
 }
 
-export const formatDate = (value: number | string | Date, locale: string = "en-US", format: FormatDateTime | FormatDate | FormatTime = "shortDate", timeZone?: string) => {
+export const formatDate = (value: number | string | Date, locale: string = "en-US", format: FormatDateTime | FormatDate | FormatTime | string = "shortDate", timeZone?: string) => {
 	if (!value) return ""
 	let opts: Intl.DateTimeFormatOptions = {}
 	opts = FORMAT[format as FormatDateTime | FormatDate | FormatTime]
 
-	if (!opts) {
-		console.error("Error: invalid format in formatDate")
-		return ""
-	}
+	if (!opts) opts = getFormatPattern(format)
 
 	return new Intl.DateTimeFormat(locale, { ...opts, timeZone }).format(value instanceof Date ? value : new Date(value))
 }
@@ -127,4 +188,17 @@ export const getWeekdaysList = (locale: string = "en-US", format: "short" | "nar
 		weekdays.push(weekday)
 	}
 	return weekdays
+}
+
+export function getFormatPattern(pattern: string) {
+	let options: Intl.DateTimeFormatOptions = {}
+	Object.entries(PATTERN_DATE).forEach(([key, value]) => {
+		for (const item of value) {
+			if (!pattern.includes(item.value)) {
+				options = { ...options, ...item.config }
+				break
+			}
+		}
+	})
+	return options
 }
