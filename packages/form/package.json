@@ -1,6 +1,6 @@
 {
 	"name": "@wolfden-ui/form",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "This is the form package for Wolfden UI",
 	"main": "dist/index.js",
 	"files": [
@@ -16,7 +16,8 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc --watch",
+		"build": "npx tsc -p .",
+		"start": "tsc -w",
 		"prettier": "prettier --write \"**/*.{ts,tsx}\""
 	},
 	"author": "Nazareno Ciancaglini <nazareno.ciancaglini@gmail.com>",
@@ -27,11 +28,11 @@
 		"typescript": "^5.5.2"
 	},
 	"peerDependencies": {
-		"react": "^18.0.0",
-		"react-dom": "^18.0.0"
+		"react": "^18",
+		"react-dom": "^18"
 	},
 	"types": "./dist/index.d.ts",
 	"dependencies": {
-		"@wolfden-ui/system": "^0.0.7"
+		"@wolfden-ui/system": "^0.0.8"
 	}
 }
