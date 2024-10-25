@@ -1,6 +1,6 @@
 {
 	"name": "@wolfden-ui/form",
-	"version": "0.0.6",
+	"version": "0.0.8",
 	"description": "This is the form package for Wolfden UI",
 	"main": "dist/index.js",
 	"files": [
@@ -16,7 +16,8 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc --watch",
+		"build": "tsc",
+		"start": "tsc -w",
 		"prettier": "prettier --write \"**/*.{ts,tsx}\""
 	},
 	"author": "Nazareno Ciancaglini <nazareno.ciancaglini@gmail.com>",

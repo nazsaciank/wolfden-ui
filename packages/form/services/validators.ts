@@ -11,7 +11,6 @@ export class Validators {
 		if (value === undefined) return { required: true }
 		if (value === null) return { required: true }
 		if (value === "") return { required: true }
-		if (isNaN(value)) return { required: true }
 		return null
 	}
 
