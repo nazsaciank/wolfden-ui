@@ -3,6 +3,7 @@ import { FormArrayState, FormControlState, FormGroupState } from "../types"
 export type GroupPayload<T extends object = any> =
 	| (Partial<FormGroupState[keyof T]> & {
 			path?: keyof T
+			reset?: boolean
 	  })
 	| FormGroupState
 
@@ -26,10 +27,7 @@ export function formGroup<T extends object = any>(state: FormGroupState<T>, payl
 			},
 		}
 	}
-	return {
-		...state,
-		...payload,
-	}
+	return payload as FormGroupState<T>
 }
 
 export function formArray<T extends object = any>(state: FormArrayState<T>, payload: ArrayPayload<T>): FormArrayState<T> {

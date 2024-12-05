@@ -197,7 +197,7 @@ export type ControlRef<R extends HTMLElement = any> = {
 
 export type ControlProps<T = any> = {
 	/** Name of the Control */
-	name: string
+	name?: string
 	/** Control */
 	control?: FormControl<T>
 	/** List of synchronous validation functions. */
