@@ -53,7 +53,7 @@ export class Parsers {
 			value = value.replaceAll(onlyNumbers, "")
 
 			if (typeof value === "string") {
-				value = value.replace(new RegExp(separete, "g"), "")
+				value = value.replaceAll(separete, "")
 				value = value.replace(decimal, ".")
 			}
 
