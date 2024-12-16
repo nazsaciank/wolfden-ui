@@ -1,7 +1,8 @@
 import { Dispatch } from "react"
-import { AsyncValidatorFn, FormControlState, MaskFn, ParseFn, ValidatorError, ValidatorFn } from "../types"
+import { AsyncValidatorFn, FormControlState, FormGroupState, MaskFn, ParseFn, ValidatorError, ValidatorFn } from "../types"
 
 type ControlOptions<T = any> = {
+	group?: FormGroupState
 	state: FormControlState<T>
 	dispatch: Dispatch<Partial<FormControlState<T>>>
 	debounce: (fn: (...args: any[]) => void, ...args: any[]) => void
@@ -23,7 +24,7 @@ export const CONTROL_STATE: FormControlState = {
 	isIndeterminate: false,
 }
 
-export function setValue<T = any>({ state, dispatch, debounce, validators, asyncValidators, mask, parse }: ControlOptions<T>) {
+export function setValue<T = any>({ group, state, dispatch, debounce, validators, asyncValidators, mask, parse }: ControlOptions<T>) {
 	return function (value: T) {
 		if (state.isDisabled) return
 
@@ -35,7 +36,7 @@ export function setValue<T = any>({ state, dispatch, debounce, validators, async
 
 		let error: ValidatorError | null = null
 		for (const validator of validators) {
-			let result = validator(parsed)
+			let result = validator(parsed, group)
 			if (!result) continue
 			error = result
 			break
@@ -48,7 +49,7 @@ export function setValue<T = any>({ state, dispatch, debounce, validators, async
 		debounce(async () => {
 			let error: ValidatorError | null = null
 			for await (const validator of asyncValidators) {
-				let result = await validator(parsed)
+				let result = await validator(parsed, group)
 				if (!result) continue
 				error = result
 				break
@@ -65,11 +66,11 @@ export function reset<T = any>({ state, dispatch }: Pick<ControlOptions<T>, "sta
 	}
 }
 
-export function validate({ state, dispatch, validators }: Pick<ControlOptions, "state" | "dispatch" | "validators">) {
+export function validate({ group, state, dispatch, validators }: Pick<ControlOptions, "group" | "state" | "dispatch" | "validators">) {
 	return function () {
 		let error: ValidatorError | null = null
 		for (const validator of validators) {
-			let result = validator(state.parsed)
+			let result = validator(state.parsed, group)
 			if (!result) continue
 			error = result
 			break
@@ -79,7 +80,7 @@ export function validate({ state, dispatch, validators }: Pick<ControlOptions, "
 	}
 }
 
-export function asyncValidate({ state, dispatch, asyncValidators, debounce }: Pick<ControlOptions, "state" | "dispatch" | "asyncValidators" | "debounce">) {
+export function asyncValidate({ group, state, dispatch, asyncValidators, debounce }: Pick<ControlOptions, "group" | "state" | "dispatch" | "asyncValidators" | "debounce">) {
 	return function () {
 		if (state.error || asyncValidators.length === 0) return
 
@@ -87,7 +88,7 @@ export function asyncValidate({ state, dispatch, asyncValidators, debounce }: Pi
 		debounce(async () => {
 			let error: ValidatorError | null = null
 			for await (const validator of asyncValidators) {
-				let result = await validator(state.parsed)
+				let result = await validator(state.parsed, group)
 				if (!result) continue
 				error = result
 				break
