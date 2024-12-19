@@ -17,6 +17,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"build:watch": "tsc --watch",
 		"publish": "npm run build && npm publish",
 		"prettier": "prettier --write \"**/*.{ts,tsx}\""
 	},
