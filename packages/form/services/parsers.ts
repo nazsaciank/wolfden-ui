@@ -49,7 +49,7 @@ export class Parsers {
 			const separete = getSeparatorGroup(locale)
 			const decimal = getSeparatorDecimal(locale)
 
-			const onlyNumbers = new RegExp(`[^\\d${separete}${decimal}]`, "g")
+			const onlyNumbers = new RegExp(`[^\\d-${separete}${decimal}]`, "g")
 			value = value.replaceAll(onlyNumbers, "")
 
 			if (typeof value === "string") {
