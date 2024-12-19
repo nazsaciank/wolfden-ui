@@ -1,5 +1,5 @@
-import { ControlProps, FormControl, useFormControl, useTextfield, ValidatorError } from "@lib/form"
-import { classnames, Kick } from "@lib/system"
+import { ControlProps, FormControl, useFormControl, useTextfield, ValidatorError } from "@wolfden-ui/form"
+import { classnames, Kick } from "@wolfden-ui/system"
 import React, { forwardRef, useEffect } from "react"
 
 type InputVariant = "outline" | "fill" | "underline"

@@ -1,5 +1,5 @@
 "use client"
-import { classnames } from "@lib/system"
+import { classnames } from "@wolfden-ui/system"
 import { useMemo, useState } from "react"
 
 interface Weekday {
@@ -10,9 +10,9 @@ interface Weekday {
 	isOutside: boolean
 }
 
-type CalendarColor = "default" | "primary" | "secondary" | "success" | "warning" | "danger" | "info"
+export type CalendarColor = "default" | "primary" | "secondary" | "success" | "warning" | "danger" | "info"
 
-interface CalendarProps {
+export interface CalendarProps {
 	color?: CalendarColor
 
 	value?: Date | string | number

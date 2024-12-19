@@ -1,4 +1,4 @@
-import { classnames } from "@lib/system"
+import { classnames } from "@wolfden-ui/system"
 import React from "react"
 
 export type ButtonGroupProps = React.ComponentProps<"div"> & {}

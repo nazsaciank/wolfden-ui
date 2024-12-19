@@ -1,5 +1,5 @@
 "use client"
-import { classnames, PolymorphicProps } from "@lib/system"
+import { classnames, PolymorphicProps } from "@wolfden-ui/system"
 import { ElementType, useRef, useState } from "react"
 
 export type ButtonProps<E extends ElementType = "button"> = PolymorphicProps<E> & {
