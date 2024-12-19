@@ -28,11 +28,11 @@
 		"typescript": "^5.5.2"
 	},
 	"peerDependencies": {
-		"react": "^18.0.0",
-		"react-dom": "^18.0.0"
+		"react": "^18",
+		"react-dom": "^18"
 	},
 	"types": "./dist/index.d.ts",
 	"dependencies": {
-		"@wolfden-ui/system": "^0.0.7"
+		"@wolfden-ui/system": "^0.0.8"
 	}
 }
