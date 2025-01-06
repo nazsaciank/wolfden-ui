@@ -77,6 +77,7 @@ const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 		year: "2-digit",
 		hour: "numeric",
 		minute: "numeric",
+		hour12: false,
 	},
 	medium: {
 		day: "numeric",
@@ -85,6 +86,7 @@ const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 		hour: "numeric",
 		minute: "numeric",
 		second: "numeric",
+		hour12: false,
 	},
 	long: {
 		day: "numeric",
@@ -94,6 +96,7 @@ const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 		minute: "numeric",
 		second: "numeric",
 		timeZoneName: "short",
+		hour12: false,
 	},
 	full: {
 		day: "numeric",
@@ -103,6 +106,7 @@ const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 		minute: "numeric",
 		second: "numeric",
 		timeZoneName: "long",
+		hour12: false,
 	},
 }
 
@@ -134,23 +138,27 @@ const FORMAT_TIME: FormatDateOptions<FormatTime> = {
 	shortTime: {
 		hour: "numeric",
 		minute: "numeric",
+		hour12: false,
 	},
 	mediumTime: {
 		hour: "numeric",
 		minute: "numeric",
 		second: "numeric",
+		hour12: false,
 	},
 	longTime: {
 		hour: "numeric",
 		minute: "numeric",
 		second: "numeric",
 		timeZoneName: "short",
+		hour12: false,
 	},
 	fullTime: {
 		hour: "numeric",
 		minute: "numeric",
 		second: "numeric",
 		timeZoneName: "long",
+		hour12: false,
 	},
 }
 

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType, PropsWithChildren } from "react"
+import { ComponentPropsWithoutRef, ElementType, PropsWithChildren, RefAttributes } from "react"
 
 export type PolymorphicAsProp<E extends ElementType> = {
 	as?: E
@@ -24,3 +24,5 @@ export type PageProps<P = any, S = any> = {
 export type PageParams<P = any> = {
 	[K in keyof P]: P[K]
 }
+
+export type InternalForwardRef<P, T> = (props: P & RefAttributes<T>) => JSX.Element
