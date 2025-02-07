@@ -1,6 +1,6 @@
 {
 	"name": "@wolfden-ui/system",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "This is the theme package for Wolfden UI",
 	"main": "dist/index.js",
 	"files": [

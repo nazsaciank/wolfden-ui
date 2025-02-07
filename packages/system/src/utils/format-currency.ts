@@ -1,6 +1,6 @@
 export type DisplayCurrency = "s" | "sn" | "c" | "n"
 
-export function formatCurrency(value: string | number, currency: string, locale: string | string[] = "en-US", format: `${DisplayCurrency} ${number}.${number}-${number}` = "s 1.0-0") {
+export function formatCurrency(value: string | number, currency: string, locale: string | string[] = "en-US", format: `${DisplayCurrency} ${number}.${number}-${number}` = "c 1.0-2") {
 	if (value == undefined || value == null || !currency) return ""
 	if (typeof value === "string") value = Number(value)
 	if (isNaN(value)) return ""
