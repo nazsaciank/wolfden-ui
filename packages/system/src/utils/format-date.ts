@@ -85,7 +85,6 @@ const FORMAT_DATE_TIME: FormatDateOptions<FormatDateTime> = {
 		year: "numeric",
 		hour: "numeric",
 		minute: "numeric",
-		second: "numeric",
 		hour12: false,
 	},
 	long: {
@@ -143,7 +142,6 @@ const FORMAT_TIME: FormatDateOptions<FormatTime> = {
 	mediumTime: {
 		hour: "numeric",
 		minute: "numeric",
-		second: "numeric",
 		hour12: false,
 	},
 	longTime: {
