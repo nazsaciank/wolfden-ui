@@ -18,9 +18,9 @@ export type FormFnState = {
 	/** List of asynchronous validation functions. */
 	asyncValidators: AsyncValidatorFn[]
 	/** Function to apply a mask to the value. */
-	mask: MaskFn
+	mask: MaskFn | null
 	/** Function to transform the value before using it. */
-	parse: ParseFn
+	parse: ParseFn | null
 }
 
 export type FormControlSchema<T = any> = Partial<FormFnState> & {
@@ -65,48 +65,49 @@ export type FormGroupState<T extends object = any> = {
 
 export type FormArrayState<T extends object = any> = FormGroupState<T>[]
 
-export type FormControl<T = any> = Readonly<FormControlState<T>> & {
-	/** Indicates whether the value is valid. */
-	readonly isValid: boolean
-	/** Indicates whether the value is invalid. */
-	readonly isInvalid: boolean
-	/** Indicates whether validation is pending. */
-	readonly isPending: boolean
+export type FormControl<T = any> = Readonly<FormControlState<T>> &
+	Readonly<FormFnState> & {
+		/** Indicates whether the value is valid. */
+		readonly isValid: boolean
+		/** Indicates whether the value is invalid. */
+		readonly isInvalid: boolean
+		/** Indicates whether validation is pending. */
+		readonly isPending: boolean
 
-	/** Sets a new value for the control. */
-	setValue(value: T): void
-	/** Resets the control to its initial state. */
-	reset(): void
-	/** Run synchronous validations manually */
-	validate(): void
-	/** Run asynchronous validations manually */
-	asyncValidate(): void
+		/** Sets a new value for the control. */
+		setValue(value: T): void
+		/** Resets the control to its initial state. */
+		reset(): void
+		/** Run synchronous validations manually */
+		validate(): void
+		/** Run asynchronous validations manually */
+		asyncValidate(): void
 
-	/** Establishes new validation functions. */
-	setValidators(validators: ValidatorFn[], revalidate?: boolean): void
-	/** Establishes new asynchronous validation functions. */
-	setAsyncValidators(validators: AsyncValidatorFn[], revalidate?: boolean): void
-	/** Sets a new mask function. */
-	setMask(mask: MaskFn, emitSelf?: boolean): void
-	/** Sets a new parsing function. */
-	setParse(parse: ParseFn, emitSelf?: boolean): void
-	/** Set an error manually. */
-	setError(errors: ValidatorError | null): void
+		/** Establishes new validation functions. */
+		setValidators(validators: ValidatorFn[], revalidate?: boolean): void
+		/** Establishes new asynchronous validation functions. */
+		setAsyncValidators(validators: AsyncValidatorFn[], revalidate?: boolean): void
+		/** Sets a new mask function. */
+		setMask(mask: MaskFn, emitSelf?: boolean): void
+		/** Sets a new parsing function. */
+		setParse(parse: ParseFn, emitSelf?: boolean): void
+		/** Set an error manually. */
+		setError(errors: ValidatorError | null): void
 
-	/** Habilita el control. */
-	enable(): void
-	/** Disables control. */
-	disable(): void
+		/** Habilita el control. */
+		enable(): void
+		/** Disables control. */
+		disable(): void
 
-	/** Mark the control as modified */
-	markAsDirty(): void
-	/** Mark the control as unmodified. */
-	markAsPristine(): void
-	/** Mark the control as touched. */
-	markAsTouched(): void
-	/** Mark the control as untouched. */
-	markAsUntouched(): void
-}
+		/** Mark the control as modified */
+		markAsDirty(): void
+		/** Mark the control as unmodified. */
+		markAsPristine(): void
+		/** Mark the control as touched. */
+		markAsTouched(): void
+		/** Mark the control as untouched. */
+		markAsUntouched(): void
+	}
 
 export type FormGroup<T extends object = any> = {
 	/** Current value of the form. */
