@@ -66,6 +66,7 @@ export function useFormControl<T = any>(schema: FormControlSchema<T>, { name = "
 		asyncValidators,
 		mask,
 		parse,
+		setSchema: controller.setSchema({ dispatch, debounce, asyncValidators }),
 		setValue: controller.setValue({ state, dispatch, debounce, validators, asyncValidators, mask, parse }),
 		reset: controller.reset({ state: initialState.current, dispatch }),
 		setError: controller.setError({ dispatch }),

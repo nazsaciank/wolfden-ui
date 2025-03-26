@@ -1,5 +1,6 @@
 import { Dispatch } from "react"
-import { AsyncValidatorFn, FormControlState, FormGroupState, MaskFn, ParseFn, ValidatorError, ValidatorFn } from "../types"
+import { AsyncValidatorFn, FormControlSchema, FormControlState, FormGroupState, MaskFn, ParseFn, ValidatorError, ValidatorFn } from "../types"
+import { initialControlState } from "./initial-state"
 
 type ControlOptions<T = any> = {
 	group?: FormGroupState
@@ -22,6 +23,29 @@ export const CONTROL_STATE: FormControlState = {
 	isDirty: false,
 	isTouched: false,
 	isIndeterminate: false,
+}
+
+export function setSchema<T = any>({ dispatch, debounce, group, asyncValidators: oldAsyncValidators }: Pick<ControlOptions<T>, "dispatch" | "debounce" | "group" | "asyncValidators">) {
+	return function (schema: FormControlSchema<T>) {
+		const state = initialControlState("", schema)
+		dispatch(state)
+
+		if (state.status === "PENDING") {
+			const asyncValidators = schema.asyncValidators || oldAsyncValidators
+
+			debounce(async () => {
+				let error: ValidatorError | null = null
+				for await (const validator of asyncValidators) {
+					let result = await validator(state.parsed, group)
+					if (!result) continue
+					error = result
+					break
+				}
+
+				dispatch({ error, status: error ? "INVALID" : "VALID" })
+			})
+		}
+	}
 }
 
 export function setValue<T = any>({ group, state, dispatch, debounce, validators, asyncValidators, mask, parse }: ControlOptions<T>) {

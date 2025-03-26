@@ -74,6 +74,8 @@ export type FormControl<T = any> = Readonly<FormControlState<T>> &
 		/** Indicates whether validation is pending. */
 		readonly isPending: boolean
 
+		/** Sets a new schema for the control. */
+		setSchema(schema: FormControlSchema<T>): void
 		/** Sets a new value for the control. */
 		setValue(value: T): void
 		/** Resets the control to its initial state. */
