@@ -214,7 +214,14 @@ export function find<T extends object = any>({
 			asyncValidators,
 			mask,
 			parse,
-			setSchema: controller.setSchema({ dispatch, debounce, group: state, asyncValidators }),
+			setSchema: (schema) => {
+				if (schema.validators) setValidators(schema.validators)
+				if (schema.asyncValidators) setAsyncValidators(schema.asyncValidators)
+				if (schema.mask) setMask(schema.mask)
+				if (schema.parse) setParse(schema.parse)
+
+				return controller.setSchema({ dispatch, debounce, group: state, asyncValidators })(schema)
+			},
 			setValue: controller.setValue({ group: state, state: control, dispatch, debounce, validators, asyncValidators, mask, parse }),
 			reset: controller.reset({ state: _initialState, dispatch }),
 			validate: controller.validate({ group: state, state: control, dispatch, validators }),

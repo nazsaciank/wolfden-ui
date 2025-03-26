@@ -1,6 +1,6 @@
 {
 	"name": "@wolfden-ui/form",
-	"version": "0.0.16",
+	"version": "0.0.17",
 	"description": "This is the form package for Wolfden UI",
 	"main": "dist/index.js",
 	"files": [
