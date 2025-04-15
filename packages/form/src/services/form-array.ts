@@ -141,28 +141,38 @@ export function map<T extends object = any>({
 }
 
 export function push<T extends object = any>({ state, dispatch, setValidators, setAsyncValidators, setMask, setParse }: Pick<ArrayOptions<T>, "state" | "dispatch"> & ControlOptions<T>) {
-	return function (schema: FormGroupSchema<T>) {
-		const _state = initialGroupState(schema)
-		const _fns = initialGroupFn(schema)
-		setValidators((prev) => [...prev, _fns.validators as FnState<T, ValidatorFn[]>])
-		setAsyncValidators((prev) => [...prev, _fns.asyncValidators as FnState<T, AsyncValidatorFn[]>])
-		setMask((prev) => [...prev, _fns.mask as FnState<T, MaskFn | null>])
-		setParse((prev) => [...prev, _fns.parse as FnState<T, ParseFn | null>])
+	return function (...schemas: FormGroupSchema<T>[]) {
+		const _states = []
+		for (const schema of schemas) {
+			const _state = initialGroupState(schema)
+			const _fns = initialGroupFn(schema)
+			setValidators((prev) => [...prev, _fns.validators as FnState<T, ValidatorFn[]>])
+			setAsyncValidators((prev) => [...prev, _fns.asyncValidators as FnState<T, AsyncValidatorFn[]>])
+			setMask((prev) => [...prev, _fns.mask as FnState<T, MaskFn | null>])
+			setParse((prev) => [...prev, _fns.parse as FnState<T, ParseFn | null>])
 
-		dispatch([...state, _state])
+			_states.push(_state)
+		}
+
+		dispatch([...state, ..._states])
 	}
 }
 
 export function unshift<T extends object = any>({ state, dispatch, setValidators, setAsyncValidators, setMask, setParse }: Pick<ArrayOptions<T>, "state" | "dispatch"> & ControlOptions<T>) {
-	return function (schema: FormGroupSchema<T>) {
-		const _state = initialGroupState(schema)
-		const _fns = initialGroupFn(schema)
-		setValidators((prev) => [_fns.validators as FnState<T, ValidatorFn[]>, ...prev])
-		setAsyncValidators((prev) => [_fns.asyncValidators as FnState<T, AsyncValidatorFn[]>, ...prev])
-		setMask((prev) => [_fns.mask as FnState<T, MaskFn | null>, ...prev])
-		setParse((prev) => [_fns.parse as FnState<T, ParseFn | null>, ...prev])
+	return function (...schemas: FormGroupSchema<T>[]) {
+		const _states = []
+		for (const schema of schemas) {
+			const _state = initialGroupState(schema)
+			const _fns = initialGroupFn(schema)
+			setValidators((prev) => [_fns.validators as FnState<T, ValidatorFn[]>, ...prev])
+			setAsyncValidators((prev) => [_fns.asyncValidators as FnState<T, AsyncValidatorFn[]>, ...prev])
+			setMask((prev) => [_fns.mask as FnState<T, MaskFn | null>, ...prev])
+			setParse((prev) => [_fns.parse as FnState<T, ParseFn | null>, ...prev])
 
-		dispatch([_state, ...state])
+			_states.push(_state)
+		}
+
+		dispatch([..._states, ...state])
 	}
 }
 

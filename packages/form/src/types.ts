@@ -168,9 +168,9 @@ export type FormArray<T extends object = any> = {
 	/** Find a form in the array by its index. */
 	find(index: number): FormGroup<T> | null
 	/** Add a new form to the end of the array. */
-	push(schema: FormGroupSchema<T>): void
+	push(...schema: FormGroupSchema<T>[]): void
 	/** Add a new form to the start of the array. */
-	unshift(schema: FormGroupSchema<T>): void
+	unshift(...schema: FormGroupSchema<T>[]): void
 	/** Removes a form from the array by its index. */
 	remove(index: number): void
 
