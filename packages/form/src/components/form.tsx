@@ -1,15 +1,18 @@
 "use client"
-import React, { FormEvent, forwardRef } from "react"
+import { PolymorphicProps } from "@wolfden-ui/system"
+import { ElementType, FormEvent, ForwardedRef, forwardRef, useMemo } from "react"
 import { FormContext } from "../context"
 import { FormGroup } from "../types"
 
-export type FormProps<T extends object = any> = Omit<React.ComponentProps<"form">, "onSubmit"> & {
+export type FormProps<E extends ElementType, T extends object = any> = Omit<PolymorphicProps<E>, "onSubmit"> & {
 	group: FormGroup<T>
 
 	onSubmit?: (values: T) => void
 }
 
-export const Form = forwardRef<HTMLFormElement, FormProps>(function Form({ group, onSubmit, children, ...props }, ref) {
+export const Form = forwardRef(function Form<E extends ElementType = "form", F = HTMLFormElement>({ as, group, onSubmit, children, ...props }: FormProps<E>, ref: ForwardedRef<F>) {
+	const As = useMemo(() => as || "form", [as])
+
 	function handleOnSubmit(ev: FormEvent<HTMLFormElement>) {
 		ev.preventDefault()
 
@@ -18,9 +21,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form({ group
 
 	return (
 		<FormContext.Provider value={{ findControl: group?.find }}>
-			<form ref={ref} onSubmit={handleOnSubmit} {...props}>
+			{/* @ts-expect-error - ref is not supported on polymorphic components */}
+			<As ref={ref} onSubmit={handleOnSubmit} {...props}>
 				{children}
-			</form>
+			</As>
 		</FormContext.Provider>
 	)
 })
