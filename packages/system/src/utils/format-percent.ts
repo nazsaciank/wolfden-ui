@@ -24,5 +24,5 @@ export function formatPercent(value: string | number, locale: string | string[] 
 			if (part.type === "literal" && part.value.trim() === "") return ""
 			return part.value
 		})
-		.join()
+		.join("")
 }
