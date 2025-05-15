@@ -11,11 +11,18 @@ export function formatPercent(value: string | number, locale: string | string[] 
 
 	if (!minFracDig || !maxFracDig) throw new Error("Invalid digit format")
 
-	return new Intl.NumberFormat(locale, {
+	const formattedParts = new Intl.NumberFormat(locale, {
 		style: "percent",
 		useGrouping: true,
 		minimumIntegerDigits: Number(minIntDig),
 		minimumFractionDigits: Number(minFracDig),
 		maximumFractionDigits: Number(maxFracDig),
-	}).format(value)
+	}).formatToParts(value)
+
+	return formattedParts
+		.map((part) => {
+			if (part.type === "literal" && part.value.trim() === "") return ""
+			return part.value
+		})
+		.join()
 }
