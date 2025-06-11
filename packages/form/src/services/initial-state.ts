@@ -16,7 +16,7 @@ export function initialControlState(name: string, schema: FormControlSchema): Fo
 
 	return {
 		name,
-		value: value ?? null,
+		value: masked ?? null,
 		parsed: parsed ?? null,
 		error,
 		status: error ? "INVALID" : asyncValidators.length ? "PENDING" : "VALID",
