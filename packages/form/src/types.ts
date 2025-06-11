@@ -128,7 +128,7 @@ export type FormGroup<T extends object = any> = {
 	readonly isPending: boolean
 
 	/** Finds and returns a `FormControl` corresponding to a specific field. */
-	find<K extends keyof T>(path: K): FormControl<T[K]> | null
+	find<K extends keyof T>(path: K): FormControl<T[K] | null> | null
 	/** Adds a new control to the form at the specified path. */
 	add<K extends keyof T>(name: K, schema: FormControlSchema<T[K]>): void
 	/** Removes the control at the specified path from the form. */
