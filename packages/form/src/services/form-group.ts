@@ -115,7 +115,7 @@ export function asyncValidate<T extends object = any>({ state, dispatch, asyncVa
 }
 
 export function add<T extends object = any>({ state, dispatch, setValidators, setAsyncValidators, setMask, setParse }: Pick<GroupOptions<T>, "state" | "dispatch"> & ControlOptions<T>) {
-	return function (name: string, schema: FormControlSchema) {
+	return function <K extends keyof T>(name: K, schema: FormControlSchema) {
 		const path = name as keyof T
 		if (state[path]) return
 		const control = initialControlState(path as string, schema)
@@ -165,20 +165,20 @@ export function find<T extends object = any>({
 	setMask: gSetMask,
 	setParse: gSetParse,
 }: GroupOptions<T> & ControlOptions<T>) {
-	return function (path: keyof T): FormControl<T[keyof T]> | null {
+	return function <K extends keyof T>(path: K): FormControl<T[K]> | null {
 		let control: FormControlState = state[path]
 		if (!control) {
 			console.warn(`Control at path ${path as string} not found`)
 			return null
 		}
 
-		let _initialState = initialState && initialState[path] ? initialState[path] : ({ ...controller.CONTROL_STATE, name: path } as FormControlState)
+		let _initialState = initialState && initialState[path] ? initialState[path] : ({ ...controller.CONTROL_STATE, name: path as string } as FormControlState)
 		let validators = gValidators[path]
 		let asyncValidators = gAsyncValidators[path]
 		let mask = gMask[path]
 		let parse = gParse[path]
 
-		const dispatch = controlDispatch(path, gDispatch)
+		const dispatch = controlDispatch(path as string, gDispatch)
 		const debounce = controlDebounce(path as string, gDebounce)
 
 		function setValidators(validators: ValidatorFn[], revalidate: boolean = true) {

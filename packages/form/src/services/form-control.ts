@@ -53,7 +53,7 @@ export function setValue<T = any>({ group, state, dispatch, debounce, validators
 		if (state.isDisabled) return
 
 		let masked = mask ? mask(value, state.value) : value
-		let parsed = parse ? parse(value) : value
+		let parsed = parse ? parse(masked) : value
 
 		dispatch({ value: masked, parsed })
 		if (!state.isDirty) dispatch({ isDirty: true })

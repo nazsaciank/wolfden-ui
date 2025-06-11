@@ -3,13 +3,12 @@ import { AsyncValidatorFn, FormArraySchema, FormArrayState, FormControlSchema, F
 export function initialControlState(name: string, schema: FormControlSchema): FormControlState {
 	let { value, validators = [], asyncValidators = [], mask, parse, disabled } = schema
 
-	value = mask ? mask(value) : value
-
-	let parsed = parse ? parse(value) : value
+	let masked = mask ? mask(value) : value
+	let parsed = parse ? parse(masked) : masked
 
 	let error: ValidatorError | null = null
 	for (const validator of validators) {
-		let result = validator(value)
+		let result = validator(parsed)
 		if (!result) continue
 		error = result
 		break
